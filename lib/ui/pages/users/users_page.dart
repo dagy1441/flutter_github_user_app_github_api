@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:github_user_flutter/ui/pages/home/home_page.dart';
 import 'package:http/http.dart' as http;
 
 class UsersPage extends StatefulWidget {
@@ -109,77 +110,104 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ],
           ),
-          Expanded(
-            child: ListView.builder(
-              controller: scrollController,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              "${items[index]['avatar_url']}",
-                            ),
-                            radius: 30,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text("${items[index]['login']}"),
-                        ],
-                      ),
-                      CircleAvatar(
-                        child: Text("${items[index]['score']}"),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-
           // Expanded(
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(20.0),
-          //     child: GridView.builder(
-          //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //           //maxCrossAxisExtent: 200,
-          //           childAspectRatio: 3 / 2,
-          //           crossAxisSpacing: 10,
-          //           mainAxisSpacing: 20,
-          //           crossAxisCount: 3,
-          //         ),
-          //         itemCount: data == null ? 0 : data['items'].length,
-          //         itemBuilder: (BuildContext ctx, index) {
-          //           return InkWell(
-          //             onTap: () {},
-          //             child: Container(
-          //               alignment: Alignment.center,
-          //               child: Column(
-          //                 children: [
-          //                   Expanded(
-          //                     child: Padding(
-          //                       padding: const EdgeInsets.all(5.0),
-          //                       child: ClipRRect(
-          //                         borderRadius: BorderRadius.circular(8.0),
-          //                         child: Image.network(
-          //                           "${data['items'][index]['avatar_url']}",
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                   Text("${data['items'][index]['login']}"),
-          //                 ],
+          //   child: ListView.separated(
+          //     // ListView.builder et ListView.separated
+
+          //     separatorBuilder: (context, index) => Divider(
+          //       height: 2,
+          //       color: Colors.blueAccent,
+          //     ),
+          //     controller: scrollController,
+          //     itemCount: items.length,
+          //     itemBuilder: (context, index) {
+          //       return ListTile(
+          //         onTap: () {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) => HomePage(
+          //                 username: items[index]['login'],
+          //                 avatar: items[index]['avatar_url'],
           //               ),
           //             ),
           //           );
-          //         }),
+          //         },
+          //         title: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               children: [
+          //                 CircleAvatar(
+          //                   backgroundImage: NetworkImage(
+          //                     "${items[index]['avatar_url']}",
+          //                   ),
+          //                   radius: 30,
+          //                 ),
+          //                 SizedBox(
+          //                   width: 15,
+          //                 ),
+          //                 Text("${items[index]['login']}"),
+          //               ],
+          //             ),
+          //             CircleAvatar(
+          //               child: Text("${items[index]['score']}"),
+          //             )
+          //           ],
+          //         ),
+          //       );
+          //     },
           //   ),
           // ),
+
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    //maxCrossAxisExtent: 200,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20,
+                    crossAxisCount: 3,
+                  ),
+                  itemCount: data == null ? 0 : items.length,
+                  itemBuilder: (BuildContext ctx, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(
+                              username: items[index]['login'],
+                              avatar: items[index]['avatar_url'],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(
+                                    "${items[index]['avatar_url']}",
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text("${items[index]['login']}"),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ),
         ],
       )),
     );
